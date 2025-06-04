@@ -377,7 +377,7 @@
             document.getElementById('result-text').innerHTML = `
                 <strong>Итоговая стоимость:</strong> ${formatNumber(totalCost)} USD<br><br>
                 <strong>Растаможка:</strong> ${formatNumber(customsDuty)} USD<br>
-                <small>(Включая пошлину ${dutyRate*100}% + возрастной коэффициент ${ageRate*100}%)</small>
+                <small>(Включая пошлину ${(dutyRate*100).toFixed(0)}% + возрастной коэффициент ${(ageRate*100).toFixed(0)}%)</small>
             `;
         }
 
