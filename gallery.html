@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Базовые стили */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* Стили для изображений */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.8); 
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: modalopen 0.4s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        #modalTitle {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        #modalDescription {
+            color: #555;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        
+        /* Подвал */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-content p {
+            margin-bottom: 15px;
+        }
+        
+        .contact-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-icon {
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s;
+            padding: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .contact-icon:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Адаптивные стили */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+                width: 95%;
+            }
+            
+            #modalTitle {
+                font-size: 1.5rem;
+            }
+            
+            #modalDescription {
+                font-size: 1rem;
+            }
+            
+            .contact-icon {
+                font-size: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .modal-content {
+                margin: 15% auto;
+                padding: 15px;
+            }
+            
+            #modalTitle {
+                font-size: 1.3rem;
+            }
+            
+            .close {
+                font-size: 24px;
+            }
+            
+            .contact-icons {
+                gap: 15px;
+            }
+            
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="images/car9.png.webp" alt="Автомобиль KIA K5" 
+         onclick="openModal('KIA K5', 'Kia K5 — стильный и технологичный седан среднего класса.<br><br><b>Основные характеристики:</b><br>- Двигатели:<br>  • 1.6L Turbo (180 л.с.) — базовый<br>  • 2.5L Turbo (290 л.с.) — версия GT<br>- Трансмиссия: 8-ступенчатая АКПП<br>- Разгон до 100 км/ч:<br>  • 1.6L: ~7.5 сек<br>  • 2.5L GT: ~5.8 сек<br><br><b>Оснащение:</b><br>- Сенсорный экран (8–10.25 дюймов)<br>- Apple CarPlay, Android Auto<br>- Полный пакет систем безопасности<br><br><b>Цена:</b><br>- Базовая версия: от $25,000 USD<br>- Версия GT: от $32,000 USD<br><br>Kia K5 — современный, динамичный и доступный седан с отличным сочетанием характеристик и технологий.')">
+    
+    <!-- Модальное окно -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Автомобили из Грузии под ключ. Все права защищены.</p>
+            <div class="contact-icons">
+                <a href="tel:+71234567890" class="contact-icon" title="Позвонить">
+                    <i class="fas fa-phone"></i>
+                </a>
+                <a href="https://wa.me/71234567890" class="contact-icon" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://t.me/nar_editt" class="contact-icon" title="Telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="mailto:info@avto-gruzia.ru" class="contact-icon" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для открытия модального окна
+        function openModal(title, description) {
+            document.getElementById('modalTitle').innerHTML = title;
+            document.getElementById('modalDescription').innerHTML = description;
+            document.getElementById('myModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Блокировка скролла
+        }
+
+        // Функция для закрытия модального окна
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Восстановление скролла
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            var modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Закрытие по ESC
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            if (evt.keyCode == 27) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>

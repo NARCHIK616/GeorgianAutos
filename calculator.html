@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор растаможки авто из Грузии</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-image: url('https://alpari43.ru/wp-content/uploads/2023/05/rectangle-43-5-problembo.com_.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Навигация */
+        header {
+            background-color: rgba(26, 82, 118, 0.9);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: block;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        nav a:hover {
+            background-color: #2980b9;
+            border-radius: 4px;
+        }
+        
+        /* Основной контент */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            width: 100%;
+        }
+        
+        .calculator {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 500px;
+            margin: 1rem;
+        }
+        
+        .calculator h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #1a5276;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .calculator label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .calculator input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .calculator input:focus {
+            border-color: #1a5276;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 82, 118, 0.2);
+        }
+        
+        .calculator button {
+            width: 100%;
+            padding: 1rem;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .calculator button:hover {
+            background-color: #218838;
+        }
+        
+        .result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #1a5276;
+        }
+        
+        .result h3 {
+            color: #1a5276;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: rgba(26, 82, 118, 0.9);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .contact-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .contact-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-icon:hover {
+            transform: scale(1.2);
+            color: #4caf50;
+        }
+        
+        /* Бургер-меню для мобильных */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            text-align: right;
+        }
+        
+        .menu-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        /* Медиа-запросы для адаптации */
+        @media (max-width: 768px) {
+            /* Навигация */
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 0.8rem 1rem;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                white-space: normal;
+            }
+            
+            /* Калькулятор */
+            .calculator {
+                padding: 1.5rem;
+            }
+            
+            /* Подвал */
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Уменьшаем отступы */
+            .calculator {
+                padding: 1.2rem;
+            }
+            
+            /* Увеличиваем шрифты */
+            body {
+                font-size: 16px;
+            }
+            
+            .calculator h2 {
+                font-size: 1.5rem;
+            }
+            
+            /* Корректируем иконки */
+            .contact-icon {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О компании</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="gallery.html">Галерея</a></li>
+                <li><a href="contact.html">Контакты</a></li>
+                <li><a href="calculator.html">Калькулятор</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="calculator">
+            <h2>Калькулятор растаможки авто</h2>
+            <div class="form-group">
+                <label for="price">Стоимость автомобиля (USD):</label>
+                <input type="number" id="price" placeholder="Введите стоимость">
+            </div>
+            
+            <div class="form-group">
+                <label for="engine">Объем двигателя (см³):</label>
+                <input type="number" id="engine" placeholder="Введите объем">
+            </div>
+            
+            <div class="form-group">
+                <label for="year">Год выпуска:</label>
+                <input type="number" id="year" placeholder="Введите год" min="1900" max="2099">
+            </div>
+            
+            <button onclick="calculate()">Рассчитать</button>
+            
+            <div class="result" id="result" style="display: none;">
+                <h3>Результат расчета</h3>
+                <p id="result-text"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Автомобили из Грузии под ключ. Все права защищены.</p>
+            <div class="contact-icons">
+                <a href="tel:+71234567890" class="contact-icon" title="Позвонить">
+                    <i class="fas fa-phone"></i>
+                </a>
+                <a href="https://wa.me/71234567890" class="contact-icon" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://t.me/nar_editt" class="contact-icon" title="Telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
+                <a href="mailto:info@avto-gruzia.ru" class="contact-icon" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Скрипт для бургер-меню
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+
+        // Функция расчета растаможки
+        function calculate() {
+            // Получаем данные из формы
+            const price = parseFloat(document.getElementById('price').value);
+            const engine = parseFloat(document.getElementById('engine').value);
+            const year = parseInt(document.getElementById('year').value);
+            const currentYear = new Date().getFullYear();
+
+            // Проверка на корректность ввода
+            if (isNaN(price) {
+                showError("Пожалуйста, введите корректную стоимость автомобиля");
+                return;
+            }
+            
+            if (isNaN(engine) || engine <= 0) {
+                showError("Пожалуйста, введите корректный объем двигателя");
+                return;
+            }
+            
+            if (isNaN(year) || year < 1900 || year > currentYear) {
+                showError(`Пожалуйста, введите корректный год выпуска (1900-${currentYear})`);
+                return;
+            }
+
+            // Логика расчета растаможки (примерная формула)
+            let customsDuty = 0;
+            let dutyRate = 0;
+            let ageRate = 0;
+
+            // Расчет по объему двигателя
+            if (engine < 1000) {
+                dutyRate = 0.1; // 10%
+            } else if (engine <= 2000) {
+                dutyRate = 0.15; // 15%
+            } else if (engine <= 3000) {
+                dutyRate = 0.25; // 25%
+            } else {
+                dutyRate = 0.35; // 35%
+            }
+
+            // Учет возраста автомобиля
+            const age = currentYear - year;
+            if (age > 5) {
+                ageRate = 0.05; // +5% за возраст
+            } else if (age > 3) {
+                ageRate = 0.03; // +3% за возраст
+            }
+
+            // Итоговая пошлина
+            customsDuty = price * (dutyRate + ageRate);
+
+            // Итоговая стоимость
+            const totalCost = price + customsDuty;
+
+            // Форматирование чисел
+            const formatNumber = (num) => {
+                return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            };
+
+            // Вывод результата
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-text').innerHTML = `
+                <strong>Итоговая стоимость:</strong> ${formatNumber(totalCost)} USD<br><br>
+                <strong>Растаможка:</strong> ${formatNumber(customsDuty)} USD<br>
+                <small>(Включая пошлину ${dutyRate*100}% + возрастной коэффициент ${ageRate*100}%)</small>
+            `;
+        }
+
+        function showError(message) {
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-text').innerHTML = `
+                <span style="color: #dc3545;">${message}</span>
+            `;
+        }
+    </script>
+</body>
+</html>

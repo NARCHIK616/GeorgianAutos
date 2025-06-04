@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>О компании | Автомобили из Грузии под ключ</title>
+  <style>
+    /* Базовые стили */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      overflow-x: hidden;
+    }
+    
+    /* Навигация */
+    header {
+      background-color: #1a5276;
+      color: white;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      display: block;
+      transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+      background-color: #2980b9;
+      border-radius: 4px;
+    }
+    
+    /* Основной контент */
+    .about {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .about h2, .about h3 {
+      color: #1a5276;
+      margin-bottom: 1rem;
+    }
+    
+    .about img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1rem 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .about p {
+      margin-bottom: 1.5rem;
+      text-align: justify;
+    }
+    
+    /* Подвал */
+    footer {
+      background-color: #1a5276;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    
+    .contact-icon {
+      color: white;
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .contact-icon:hover {
+      transform: scale(1.2);
+    }
+    
+    /* Бургер-меню для мобильных */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    
+    .menu-toggle i {
+      font-size: 1.5rem;
+    }
+    
+    /* Медиа-запросы для адаптации */
+    @media (max-width: 768px) {
+      /* Навигация */
+      .menu-toggle {
+        display: block;
+        text-align: right;
+      }
+      
+      nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      nav ul.active {
+        display: flex;
+      }
+      
+      nav a {
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      /* Основной контент */
+      .about {
+        padding: 1.5rem;
+      }
+      
+      .about h2 {
+        font-size: 1.8rem;
+      }
+      
+      .about h3 {
+        font-size: 1.4rem;
+      }
+      
+      /* Подвал */
+      .contact-icons {
+        gap: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      /* Уменьшаем отступы */
+      .about {
+        padding: 1rem;
+      }
+      
+      /* Увеличиваем шрифты */
+      body {
+        font-size: 16px;
+      }
+      
+      /* Корректируем иконки */
+      .contact-icon {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <nav>
+      <ul id="nav-menu">
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="about.html">О компании</a></li>
+        <li><a href="services.html">Услуги</a></li>
+        <li><a href="gallery.html">Галерея</a></li>
+        <li><a href="contact.html">Контакты</a></li>
+        <li><a href="calculator.html">Калькулятор</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="about">
+    <h2>О нас</h2>
+    <img src="images/about-us.jpg" alt="О компании">
+    <p>Мы — компания с многолетним опытом в сфере перевозки автомобилей из Грузии. Наша команда профессионалов обеспечивает полный цикл услуг: от выбора автомобиля до его доставки к вам.Наша миссия — сделать процесс покупки и перегона автомобиля максимально простым, безопасным и выгодным для наших клиентов.</p>
+    <h3>Наша миссия</h3>
+    <p>Мы стремимся сделать процесс покупки и перегона автомобиля из Грузии максимально комфортным и выгодным для наших клиентов. Наша цель — обеспечить высокое качество услуг и долгосрочное сотрудничество с каждым клиентом.</p>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Автомобили из Грузии под ключ. Все права защищены.</p>
+      <div class="contact-icons">
+        <a href="tel:+71234567890" class="contact-icon" title="Позвонить">
+          <i class="fas fa-phone"></i>
+        </a>
+        <a href="https://wa.me/71234567890" class="contact-icon" title="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/nar_editt" class="contact-icon" title="Telegram">
+          <i class="fab fa-telegram"></i>
+        </a>
+        <a href="mailto:info@avto-gruzia.ru" class="contact-icon" title="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Скрипт для бургер-меню
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      document.getElementById('nav-menu').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
