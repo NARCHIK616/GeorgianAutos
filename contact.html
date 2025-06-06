@@ -92,7 +92,7 @@
       color: #555;
     }
     
-    input, textarea {
+    input, textarea, select {
       padding: 0.8rem;
       border: 1px solid #ddd;
       border-radius: 4px;
@@ -100,7 +100,7 @@
       transition: border 0.3s ease;
     }
     
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
       border-color: #1a5276;
       outline: none;
       box-shadow: 0 0 0 2px rgba(26, 82, 118, 0.2);
@@ -121,10 +121,34 @@
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     
     button[type="submit"]:hover {
       background-color: #218838;
+    }
+    
+    /* Сообщения формы */
+    .form-message {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      display: none;
+    }
+    
+    .form-message.success {
+      background-color: #d4edda;
+      color: #155724;
+      display: block;
+    }
+    
+    .form-message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      display: block;
     }
     
     /* Подвал */
@@ -248,23 +272,49 @@
   <main>
     <section class="contact">
       <h2>Свяжитесь с нами</h2>
-      <form id="contact-form">
+      
+      <div id="form-message" class="form-message"></div>
+      
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
         <div class="form-group">
           <label for="name">Имя:</label>
           <input type="text" id="name" name="name" required placeholder="Ваше имя">
         </div>
         
         <div class="form-group">
+          <label for="phone">Телефон:</label>
+          <input type="tel" id="phone" name="phone" required placeholder="Ваш телефон">
+        </div>
+        
+        <div class="form-group">
           <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required placeholder="Ваш email">
+          <input type="email" id="email" name="email" placeholder="Ваш email (необязательно)">
+        </div>
+        
+        <div class="form-group">
+          <label for="service">Интересующая услуга:</label>
+          <select id="service" name="service" required>
+            <option value="" disabled selected>Выберите услугу</option>
+            <option value="import">Ввоз автомобиля из Грузии</option>
+            <option value="customs">Растаможка автомобиля</option>
+            <option value="delivery">Доставка автомобиля</option>
+            <option value="consultation">Консультация</option>
+            <option value="other">Другое</option>
+          </select>
         </div>
         
         <div class="form-group">
           <label for="message">Сообщение:</label>
-          <textarea id="message" name="message" required placeholder="Ваше сообщение"></textarea>
+          <textarea id="message" name="message" placeholder="Ваше сообщение (необязательно)"></textarea>
         </div>
         
-        <button type="submit">Отправить сообщение</button>
+        <input type="hidden" name="_subject" value="Новая заявка с сайта Авто из Грузии">
+        <input type="hidden" name="_language" value="ru">
+        
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i>
+          Отправить сообщение
+        </button>
       </form>
     </section>
   </main>
@@ -296,12 +346,67 @@
     });
 
     // Обработка формы
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
+    const contactForm = document.getElementById('contact-form');
+    const formMessage = document.getElementById('form-message');
+    
+    contactForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      // Здесь можно добавить AJAX-запрос или другую логику обработки формы
-      alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
-      this.reset();
+      const submitButton = this.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.innerHTML;
+      
+      // Показываем индикатор загрузки
+      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+      submitButton.disabled = true;
+      
+      try {
+        const formData = new FormData(this);
+        
+        // Отправка данных на Formspree
+        const response = await fetch(this.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          // Успешная отправка
+          formMessage.textContent = 'Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время.';
+          formMessage.className = 'form-message success';
+          contactForm.reset();
+        } else {
+          // Ошибка сервера
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Ошибка при отправке формы');
+        }
+      } catch (error) {
+        // Ошибка сети или другая ошибка
+        console.error('Ошибка:', error);
+        formMessage.textContent = 'Произошла ошибка при отправке. Пожалуйста, попробуйте ещё раз или свяжитесь с нами другим способом.';
+        formMessage.className = 'form-message error';
+      } finally {
+        // Восстанавливаем кнопку
+        submitButton.innerHTML = originalButtonText;
+        submitButton.disabled = false;
+        
+        // Прокрутка к сообщению
+        formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        // Скрываем сообщение через 10 секунд
+        setTimeout(() => {
+          formMessage.className = 'form-message';
+          formMessage.textContent = '';
+        }, 10000);
+      }
+    });
+    
+    // Маска для телефона
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function(e) {
+      let x = this.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+      this.value = !x[2] ? x[1] : x[1] + ' (' + x[2] + ') ' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
     });
   </script>
 </body>
