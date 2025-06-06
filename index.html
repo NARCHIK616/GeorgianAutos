@@ -17,10 +17,9 @@
       font-family: Arial, sans-serif;
       line-height: 1.6;
       color: #333;
-      padding-top: 80px; /* Отступ для фиксированного хедера */
     }
     
-    /* Фиксированное меню */
+    /* Меню с анимацией скрытия/показа */
     header {
       position: fixed;
       top: 0;
@@ -30,6 +29,12 @@
       color: white;
       z-index: 1000;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    /* Класс для скрытия меню при прокрутке вниз */
+    header.hide {
+      transform: translateY(-100%);
     }
     
     nav {
@@ -74,6 +79,7 @@
     .hero {
       text-align: center;
       padding: 2rem;
+      padding-top: 180px; /* Отступ для шапки */
       background-color: #f5f5f5;
     }
     
@@ -159,8 +165,8 @@
     
     /* Адаптация для мобильных */
     @media (max-width: 768px) {
-      body {
-        padding-top: 120px; /* Увеличиваем отступ для мобильных */
+      .hero {
+        padding-top: 220px; /* Увеличиваем отступ для мобильных */
       }
       
       nav ul {
@@ -176,7 +182,7 @@
   </style>
 </head>
 <body>
-  <header>
+  <header id="mainHeader">
     <nav>
       <ul>
         <li><a href="index.html">Главная</a></li>
@@ -235,5 +241,31 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Логика для скрытия/показа меню при прокрутке
+    let lastScroll = 0;
+    const header = document.getElementById('mainHeader');
+    
+    window.addEventListener('scroll', function() {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll <= 0) {
+        // В самом верху страницы - показываем меню
+        header.classList.remove('hide');
+        return;
+      }
+      
+      if (currentScroll > lastScroll && !header.classList.contains('hide')) {
+        // Прокрутка вниз - скрываем меню
+        header.classList.add('hide');
+      } else if (currentScroll < lastScroll && header.classList.contains('hide')) {
+        // Прокрутка вверх - показываем меню
+        header.classList.remove('hide');
+      }
+      
+      lastScroll = currentScroll;
+    });
+  </script>
 </body>
 </html>
